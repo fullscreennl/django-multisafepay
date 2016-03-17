@@ -29,6 +29,7 @@ class RedirectTransaction(XmlRequest):
         self.plugin = plugin
         self.google_analytics = google_analytics
 
+    #signature PATCHED by JVG for python3
     @property
     def signature(self):
         data = '{0}{1}{2}{3}{4}'.format(
@@ -37,8 +38,8 @@ class RedirectTransaction(XmlRequest):
             self.merchant.account,
             self.merchant.site_id,
             self.transaction.id
-        )
-        return hashlib.md5(str(data)).hexdigest()
+        ).encode('utf-8')
+        return hashlib.md5(data).hexdigest()
 
 
 class RedirectTransactionReply(XmlResponse):
